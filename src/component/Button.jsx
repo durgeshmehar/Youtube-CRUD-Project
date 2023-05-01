@@ -23,6 +23,7 @@ function Button({name ,children}){
     }
     return(
         <>
+        {console.log("rendor button")}
         <button onKeyUp={handleEvent}>{children} </button>
         <button onClick={close}>Window Close </button>
         <form onSubmit={clickdone}>

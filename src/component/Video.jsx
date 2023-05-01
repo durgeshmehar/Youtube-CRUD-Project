@@ -5,7 +5,8 @@ import Button from "./Button";
 function Video({title,imgname ,views, ago,verified ,channelname} ) {
 
   return (
-    <>
+    <> 
+    {console.log("render Video")}
       <div className="youtube-box"  >
         <img
           src={`https://source.unsplash.com/300x200?${imgname}`}
