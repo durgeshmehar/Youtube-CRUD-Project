@@ -11,6 +11,20 @@
 .youtube-box{
     display: inline-block;
     margin:1vw 1vw 2vw 1vw;
+    position: relative;
+}
+
+.deletebutton{
+    position: absolute;
+    margin:0;
+    padding:0.3vw 0.6vw;
+    right:0vw;
+}
+.editbutton{
+    position: absolute;
+    margin:0;
+    padding:0.3vw 0.6vw;
+    right:2.8vw;
 }
 .youtube-box img{
     width: 25vw;

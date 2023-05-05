@@ -1,39 +1,36 @@
 import "./App.css";
-import Video from "./component/Video";
 import infoDB from "./data/info";
-import { useState } from 'react';
+import Addvideo from "./component/Addvideo"
+import Videomap from "./component/Videomap"
+import { useState} from 'react';
 
 function App() {
-  const [info ,setinfoDB] =useState(infoDB) ;
-  function addvideo(){
-     setinfoDB([...info ,{
-      id: info.length+1,
-      title: "Node js Lecture",
-      imgname: "lcd",
-      views: "10k",
-      ago: "1 months",
-      verified: true,
-      channelname: "Code help",
-    },]);
-  }
+
+        const [info ,setinfoDB] =useState(infoDB) ;
+        const [editableVideo ,seteditableVideo] =useState({title:"",views:"",id:""}) ;
+        function addnextvideo(video){  
+          setinfoDB([...info ,{...video,"id":info.length+1 }]);  
+          console.log(info)
+        }
+        function deleteVideo(id){  
+            setinfoDB(info.filter((item)=>item.id!==id));  
+        }
+        function editVideo(id){  
+            seteditableVideo(info.find((item)=>item.id===id))
+        }
+        function updateVideo(newvideo){
+          const newV =[...info];
+          const index =info.findIndex((item)=>item.id===newvideo.id);
+          newV.splice(index,1,newvideo);
+          setinfoDB(newV);
+          seteditableVideo({title:"",views:"",id:""});
+        }
+
   return (
-    <div className="app-body">
-      {console.log("render App")}
-      {info.map((item) => (
-        <Video
-          id={item.id}
-          title={item.title}
-          imgname={item.imgname}
-          views={item.views}
-          ago={item.ago}
-          verified={item.verified}
-          channelname={item.channelname}
-          key={item.id}
-        />
-      ))}
-      <div className="click">
-       <button onClick={addvideo}>Add</button>
-      </div>
+    <div className="app-body" >
+      
+      <Addvideo  addnextvideo={addnextvideo} editableVideo={editableVideo} updateVideo={updateVideo} />
+      <Videomap info={info} deleteVideo={deleteVideo} editVideo={editVideo} />    
     </div>
   );
 }

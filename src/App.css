@@ -2,12 +2,3 @@
   text-align: center;
   color:white;
 }
-button{
-  padding:1vw 2vw;
-  margin:1vw;
-  color:white;
-  border:1px solid grey;
-}
-button:hover{
-  background-color: grey;
-}
