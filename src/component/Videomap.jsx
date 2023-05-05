@@ -1,7 +1,7 @@
 import Video from "./Video";
 import PropTypes from "prop-types";
 
-function Videomap({ info,deleteVideo,editVideo }) {
+function Videomap({ info,dispatch,editVideo }) {
 
   return (
     <>
@@ -15,8 +15,8 @@ function Videomap({ info,deleteVideo,editVideo }) {
           verified={item.verified}
           channelname={item.channelname}
           key={item.id}
-          deleteVideo={deleteVideo}
           editVideo={editVideo}
+          dispatch={dispatch}
         />
       ))}
     </>
@@ -24,7 +24,7 @@ function Videomap({ info,deleteVideo,editVideo }) {
 }
 Videomap.propTypes = {
   info: PropTypes.array.isRequired,
-  deleteVideo: PropTypes.func,
+  dispatch: PropTypes.func,
   editVideo: PropTypes.func,
 };
 

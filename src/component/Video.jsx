@@ -2,13 +2,13 @@ import "./Video.css";
 import PropTypes from "prop-types";
 import Playbutton from "./Playbutton";
 
-function Video({ id,title, imgname, views, ago, verified, channelname,deleteVideo ,editVideo }) {
+function Video({ id,title, imgname, views, ago, verified, channelname,dispatch ,editVideo }) {
   
   return (
     <>
     
       <div className="youtube-box">
-        <button className="deletebutton" onClick={ ()=>deleteVideo(id) }> ❌</button>
+        <button className="deletebutton" onClick={ ()=>dispatch({type:"DELETE" , payload:id}) }> ❌</button>
         <button className="editbutton" onClick={ ()=>editVideo(id) }> 📝</button>
         <img
           src={`https://source.unsplash.com/300x200?${imgname}`}
@@ -54,7 +54,7 @@ Video.propTypes = {
   ago: PropTypes.string.isRequired,
   channelname: PropTypes.string.isRequired,
   verified: PropTypes.bool.isRequired,
-  deleteVideo:PropTypes.func,
+  dispatch:PropTypes.func,
   editVideo:PropTypes.func,
 };
 

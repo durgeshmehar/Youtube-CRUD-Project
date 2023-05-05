@@ -2,35 +2,42 @@ import "./App.css";
 import infoDB from "./data/info";
 import Addvideo from "./component/Addvideo"
 import Videomap from "./component/Videomap"
-import { useState} from 'react';
+import { useState,useReducer } from 'react';
 
 function App() {
-
-        const [info ,setinfoDB] =useState(infoDB) ;
+      
         const [editableVideo ,seteditableVideo] =useState({title:"",views:"",id:""}) ;
-        function addnextvideo(video){  
-          setinfoDB([...info ,{...video,"id":info.length+1 }]);  
-          console.log(info)
-        }
-        function deleteVideo(id){  
-            setinfoDB(info.filter((item)=>item.id!==id));  
-        }
-        function editVideo(id){  
-            seteditableVideo(info.find((item)=>item.id===id))
-        }
-        function updateVideo(newvideo){
+        const [info ,dispatch] =useReducer(infoReducer ,infoDB) ;
+
+
+        function infoReducer(info ,action){
           const newV =[...info];
-          const index =info.findIndex((item)=>item.id===newvideo.id);
-          newV.splice(index,1,newvideo);
-          setinfoDB(newV);
-          seteditableVideo({title:"",views:"",id:""});
+          let index=0;
+          switch(action.type){
+            case "ADD":
+              return [...info ,{...action.payload,"id":(info.length <3)?info.length+4:info.length+1 }]
+              case "DELETE":
+              return info.filter((item)=>item.id!==action.payload);
+            case "UPDATE":
+              index =info.findIndex((item)=>item.id===action.payload.id);
+              newV.splice(index,1,action.payload);
+              seteditableVideo({title:"",views:"",id:""});
+              return newV;
+            default :
+            return info;
+          }
         }
+        
+        function editVideo(id){  
+          seteditableVideo(info.find((item)=>item.id===id))
+        }
+
 
   return (
     <div className="app-body" >
       
-      <Addvideo  addnextvideo={addnextvideo} editableVideo={editableVideo} updateVideo={updateVideo} />
-      <Videomap info={info} deleteVideo={deleteVideo} editVideo={editVideo} />    
+      <Addvideo  dispatch={dispatch} editableVideo={editableVideo}  />
+      <Videomap info={info} dispatch={dispatch} editVideo={editVideo} />    
     </div>
   );
 }

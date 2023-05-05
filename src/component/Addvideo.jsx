@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {  useState } from 'react';
 
 
-function Addvideo({ addnextvideo ,updateVideo, editableVideo }){
+function Addvideo({ dispatch ,editableVideo }){
 
     const imgArr =["c++","databases","webdevelopment","computer","mobile","programming","developer"];
     const index= Math.floor(Math.random() * imgArr.length);
@@ -23,9 +23,9 @@ function Addvideo({ addnextvideo ,updateVideo, editableVideo }){
     function handlesubmit(e){
       e.preventDefault();
        if(editableVideo.id!==""){
-        updateVideo(newvideo);}
+        dispatch({type:"UPDATE" , payload:newvideo})}
        else if(newvideo.title!=="" && newvideo.views!==""){
-        addnextvideo(newvideo);}
+        dispatch({type:"ADD" , payload:newvideo});}
        else{ alert("Dont leave any box empty!")}
      setnewvideo(initialstate);
     }
@@ -55,12 +55,12 @@ function Addvideo({ addnextvideo ,updateVideo, editableVideo }){
 }
 
 Addvideo.propTypes ={
-    addnextvideo : PropTypes.func.isRequired,
+    dispatch : PropTypes.func.isRequired,
     editableVideo: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.object
       ]),
-    updateVideo :PropTypes.func,
+  
 }
 
 export default Addvideo
