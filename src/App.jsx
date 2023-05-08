@@ -1,15 +1,15 @@
 import "./App.css";
 import infoDB from "./data/info";
-import Addvideo from "./component/Addvideo"
+import Inputvideo from "./component/Inputvideo"
 import Videomap from "./component/Videomap"
-import { useState,useReducer } from 'react';
+import React from 'react'
+import { useState,useReducer ,useContext} from 'react';
+import ReactDOM from 'react-dom/client'
+import ThemeContext from "./context/ThemeContext";
 
 function App() {
-      
+  const [mode ,setmode] =useState('dark');
         const [editableVideo ,seteditableVideo] =useState({title:"",views:"",id:""}) ;
-        const [info ,dispatch] =useReducer(infoReducer ,infoDB) ;
-
-
         function infoReducer(info ,action){
           const newV =[...info];
           let index=0;
@@ -27,19 +27,26 @@ function App() {
             return info;
           }
         }
-        
+        const [info ,dispatch] =useReducer(infoReducer ,infoDB) ;
+
         function editVideo(id){  
           seteditableVideo(info.find((item)=>item.id===id))
         }
-
-
-  return (
-    <div className="app-body" >
+        const theme= useContext(ThemeContext)
       
-      <Addvideo  dispatch={dispatch} editableVideo={editableVideo}  />
+  return (
+    <React.StrictMode>
+    <ThemeContext.Provider value={mode}>
+    <div className={`app-body ${mode}`} >
+      <button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button>
+      <Inputvideo  dispatch={dispatch} editableVideo={editableVideo}  />
       <Videomap info={info} dispatch={dispatch} editVideo={editVideo} />    
     </div>
+    </ThemeContext.Provider>
+   </React.StrictMode>
+ 
   );
 }
 
 export default App;
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
