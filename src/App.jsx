@@ -5,6 +5,7 @@ import Videomap from "./component/Videomap"
 import React from 'react'
 import { useState,useReducer ,useContext} from 'react';
 import ReactDOM from 'react-dom/client'
+import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
 
 function App() {
@@ -38,7 +39,11 @@ function App() {
     <React.StrictMode>
     <ThemeContext.Provider value={mode}>
     <div className={`app-body ${mode}`} >
-      <button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button>
+      {/* {<button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button> } */}
+     <div className="switch">
+     <Switch className={`${theme}`} checked={mode==="dark"} onChange={()=>setmode( mode==='dark'?'light':'dark')} /> 
+     </div>
+    
       <Inputvideo  dispatch={dispatch} editableVideo={editableVideo}  />
       <Videomap info={info} dispatch={dispatch} editVideo={editVideo} />    
     </div>

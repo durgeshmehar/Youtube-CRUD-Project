@@ -17,3 +17,8 @@
 .app-body > button.dark{
   background-color: #4b8383;
 }
+.switch {
+  margin-top:2vw;
+  position: absolute;
+  right:4vw;
+}
