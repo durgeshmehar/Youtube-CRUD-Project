@@ -1,8 +1,10 @@
 import Video from "./Video";
 import PropTypes from "prop-types";
+import useVideos from '../hook/VideosHook'
 
-function Videomap({ info,dispatch,editVideo }) {
-
+function Videomap({editVideo }) {
+   const info =useVideos();
+   
   return (
     <>
       {info.map((item) => (
@@ -16,15 +18,12 @@ function Videomap({ info,dispatch,editVideo }) {
           channelname={item.channelname}
           key={item.id}
           editVideo={editVideo}
-          dispatch={dispatch}
         />
       ))}
     </>
   );
 }
 Videomap.propTypes = {
-  info: PropTypes.array.isRequired,
-  dispatch: PropTypes.func,
   editVideo: PropTypes.func,
 };
 

@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import Playbutton from "./Playbutton";
 import ThemeContext from '../context/ThemeContext';
+import useVideoDispatch from '../hook/VideoDispatchHook'
 
-function Video({ id,title, imgname, views, ago, verified, channelname,dispatch ,editVideo }) {
+function Video({ id,title, imgname, views, ago, verified, channelname,editVideo }) {
   const theme= useContext(ThemeContext);
+  const dispatch = useVideoDispatch();
 
   return (
     <>
@@ -57,7 +59,6 @@ Video.propTypes = {
   ago: PropTypes.string.isRequired,
   channelname: PropTypes.string.isRequired,
   verified: PropTypes.bool.isRequired,
-  dispatch:PropTypes.func,
   editVideo:PropTypes.func,
 };
 

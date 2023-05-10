@@ -2,9 +2,10 @@ import './Inputvideo.css'
 import PropTypes from "prop-types";
 import { useContext, useState } from 'react';
 import ThemeContext from '../context/ThemeContext';
+import useVideoDispatch from '../hook/VideoDispatchHook'
 
 
-function Inputvideo({ dispatch, editableVideo }) {
+function Inputvideo({ editableVideo }) {
 
   const imgArr = ["c++", "databases", "webdevelopment", "computer", "mobile", "programming", "developer"];
   const index = Math.floor(Math.random() * imgArr.length);
@@ -18,6 +19,8 @@ function Inputvideo({ dispatch, editableVideo }) {
     channelname: "Code help",
     id: "",
   };
+
+  const dispatch = useVideoDispatch();
 
   const [newvideo, setnewvideo] = useState(initialstate);
 
@@ -58,7 +61,6 @@ function Inputvideo({ dispatch, editableVideo }) {
 }
 
 Inputvideo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   editableVideo: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
