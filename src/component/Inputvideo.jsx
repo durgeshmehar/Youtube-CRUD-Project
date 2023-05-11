@@ -1,9 +1,8 @@
 import './Inputvideo.css'
 import PropTypes from "prop-types";
-import { useContext, useState } from 'react';
+import { useContext, useState ,useRef, useEffect } from 'react';
 import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
-
 
 function Inputvideo({ editableVideo }) {
 
@@ -21,7 +20,7 @@ function Inputvideo({ editableVideo }) {
   };
 
   const dispatch = useVideoDispatch();
-
+  const inputref =useRef(null);
   const [newvideo, setnewvideo] = useState(initialstate);
 
   function handlesubmit(e) {
@@ -44,11 +43,14 @@ function Inputvideo({ editableVideo }) {
     setnewvideo({ ...newvideo, [e.target.name]: e.target.value });
   }
   const theme= useContext(ThemeContext)
+  useEffect(()=>{
+    inputref.current.focus();
+  },[])
 
   return (
     <>
       <form >
-        <input type="text" value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
+        <input type="text" ref ={inputref} value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
         <input type="text" value={newvideo.views} name="views" onChange={handlechange} placeholder="Enter views" />
 
         <div className="click">

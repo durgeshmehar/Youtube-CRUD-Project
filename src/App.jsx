@@ -2,15 +2,17 @@ import "./App.css";
 import infoDB from "./data/info";
 import Inputvideo from "./component/Inputvideo"
 import Videomap from "./component/Videomap"
-import React from 'react'
-import { useState, useReducer, useContext } from 'react';
+import React, { useRef } from 'react'
+import { useState, useEffect,useReducer, useContext } from 'react';
 import ReactDOM from 'react-dom/client'
 import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
 import VideoDispatchContext from "./context/VideoDispatchContext" ;
 import VideosContext from "./context/videosContext";
+import Counter from "./component/Counter"
 
 function App() {
+ 
   const [mode, setmode] = useState('dark');
   const [editableVideo, seteditableVideo] = useState({ title: "", views: "", id: "" });
   function infoReducer(info, action) {
@@ -35,6 +37,7 @@ function App() {
   function editVideo(id) {
     seteditableVideo(info.find((item) => item.id === id))
   }
+
   const theme = useContext(ThemeContext)
 
   return (
@@ -43,10 +46,10 @@ function App() {
         <VideosContext.Provider value={info}>
           <VideoDispatchContext.Provider value={dispatch}>
 
-
+           <Counter />
           <div className={`app-body ${mode}`} >
             {/* {<button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button> } */}
-            <div className="switch">
+            <div className="switch" >
 
               <Switch className={`${theme}`} checked={mode === "dark"} onChange={() => setmode(mode === 'dark' ? 'light' : 'dark')} />
             </div>
