@@ -9,6 +9,7 @@ import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
 import VideoDispatchContext from "./context/VideoDispatchContext" ;
 import VideosContext from "./context/videosContext";
+import Counter from"./component/Counter"
 
 function App() {
   const [mode, setmode] = useState('dark');
@@ -43,6 +44,7 @@ function App() {
         <VideosContext.Provider value={info}>
           <VideoDispatchContext.Provider value={dispatch}>
 
+        <Counter />
 
           <div className={`app-body ${mode}`} >
             {/* {<button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button> } */}
