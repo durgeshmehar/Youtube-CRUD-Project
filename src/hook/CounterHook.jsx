@@ -1,6 +1,6 @@
 import { useState } from "react";
 function useCounter(){
-   const [count ,setcount] =useState(0);
+   const [count ,setcount] =useState(5);
    
    const inc =()=>{
      setcount(count+1);

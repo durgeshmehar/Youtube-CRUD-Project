@@ -1,10 +1,9 @@
 import './Playbutton.css'
-import { useState,useContext } from "react";
+import { useState,useContext,memo } from "react";
 import PropTypes from 'prop-types';
 import ThemeContext from '../context/ThemeContext';
 
-
-function Playbutton({onPlay ,onPause ,children}){
+const Playbutton =memo(function Playbutton({onPlay ,onPause ,children}){
     const [playing ,setplaying]=useState(false);
 
     function handleEvent(e){
@@ -14,13 +13,14 @@ function Playbutton({onPlay ,onPause ,children}){
        setplaying(playing=>!playing);
     }
     const theme= useContext(ThemeContext)
+    console.log("Plaubutton is rendered !")
     return(
         <>
         <button className={`${theme}`} onClick={handleEvent}>{children}&nbsp;{playing?'⏸️':'▶️' } </button>
         </>
         
     )
-}
+})
 
 Playbutton.propTypes ={
     onPlay : PropTypes.func,

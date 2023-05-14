@@ -1,6 +1,6 @@
 import './Inputvideo.css'
 import PropTypes from "prop-types";
-import { useContext, useState } from 'react';
+import { useContext, useState ,useRef, useEffect} from 'react';
 import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
 
@@ -19,6 +19,7 @@ function Inputvideo({ editableVideo }) {
     channelname: "Code help",
     id: "",
   };
+  const inputRef =useRef(null)
 
   const dispatch = useVideoDispatch();
 
@@ -35,6 +36,9 @@ function Inputvideo({ editableVideo }) {
     else { alert("Dont leave any box empty!") }
     setnewvideo(initialstate);
   }
+  useEffect(()=>{
+    inputRef.current.focus();
+  })
 
   if (editableVideo.id !== newvideo.id) {
     setnewvideo(editableVideo)
@@ -48,7 +52,7 @@ function Inputvideo({ editableVideo }) {
   return (
     <>
       <form >
-        <input type="text" value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
+        <input type="text" ref={inputRef} value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
         <input type="text" value={newvideo.views} name="views" onChange={handlechange} placeholder="Enter views" />
 
         <div className="click">

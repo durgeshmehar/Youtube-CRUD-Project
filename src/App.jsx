@@ -1,9 +1,9 @@
 import "./App.css";
-import infoDB from "./data/info";
+// import infoDB from "./data/info";
 import Inputvideo from "./component/Inputvideo"
 import Videomap from "./component/Videomap"
 import React from 'react'
-import { useState, useReducer, useContext } from 'react';
+import { useState, useReducer, useContext ,useCallback} from 'react';
 import ReactDOM from 'react-dom/client'
 import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
@@ -18,6 +18,8 @@ function App() {
     const newV = [...info];
     let index = 0;
     switch (action.type) {
+      case "LOAD":
+        return action.payload;
       case "ADD":
         return [...info, { ...action.payload, "id": (info.length < 3) ? info.length + 4 : info.length + 1 }]
       case "DELETE":
@@ -31,11 +33,12 @@ function App() {
         return info;
     }
   }
-  const [info, dispatch] = useReducer(infoReducer, infoDB);
+  const [info, dispatch] = useReducer(infoReducer, []);
 
-  function editVideo(id) {
+  const editVideo= useCallback(function editVideo(id) {
     seteditableVideo(info.find((item) => item.id === id))
-  }
+  },[info])
+
   const theme = useContext(ThemeContext)
 
   return (
