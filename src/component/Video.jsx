@@ -1,6 +1,6 @@
 import "./Video.css";
 import PropTypes from "prop-types";
-import { useCallback, useContext ,useEffect, useMemo ,memo} from "react";
+import { useCallback, useContext ,useEffect, useMemo ,memo, useId} from "react";
 import Playbutton from "./Playbutton";
 import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
@@ -17,6 +17,7 @@ const Video= memo(function Video({ id,title, imgname, views, ago, verified, chan
       clearInterval(idx);
     }
   },[id])
+  const uid =useId();
 
   const Play = useCallback(() => { console.log("Playing ...", title ) },[title])
   // const Play = useMemo(()=>() => { console.log("Playing ...", title ) },[title])
@@ -31,7 +32,7 @@ const Video= memo(function Video({ id,title, imgname, views, ago, verified, chan
   return (
     <>
   
-      <div className="youtube-box">
+      <div className="youtube-box" id={uid}>
         {console.log("Render video :"+id)}
         <button className={`deletebutton ${theme}`} onClick={ ()=>dispatch({type:"DELETE" , payload:id}) }> ❌</button>
         <button className={`editbutton ${theme}`} onClick={ ()=>editVideo(id) }> 📝</button>
