@@ -82,7 +82,7 @@ Inputvideo.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
-  ref:PropTypes.ref,
+  // ref:PropTypes.ref,
 
 }
 

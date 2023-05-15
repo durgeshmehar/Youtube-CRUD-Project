@@ -2,8 +2,8 @@ import "./App.css";
 // import infoDB from "./data/info";
 import Inputvideo from "./component/Inputvideo"
 import Videomap from "./component/Videomap"
-import React from 'react'
-import { useState,useRef, useReducer, useContext ,useCallback} from 'react';
+import React, { Suspense } from 'react'
+import { useState,useRef, useReducer, useContext ,useCallback ,lazy} from 'react';
 import ReactDOM from 'react-dom/client'
 import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
@@ -11,11 +11,13 @@ import VideoDispatchContext from "./context/VideoDispatchContext" ;
 import VideosContext from "./context/videosContext";
 import Counter from"./component/Counter"
 import { useEffect } from "react";
+const Dummy = lazy(()=>import('./component/Dummy'));
 
 function App() {
   const inputRef =useRef(null);
   const [mode, setmode] = useState('dark');
   const [editableVideo, seteditableVideo] = useState({ title: "", views: "", id: "" });
+  const [show ,setshow] =useState(false);
   function infoReducer(info, action) {
     const newV = [...info];
     let index = 0;
@@ -55,6 +57,11 @@ function App() {
           <VideoDispatchContext.Provider value={dispatch}>
 
         <Counter />
+        <button onClick={()=>{setshow(!show)}}>Show</button>
+           {show?<Suspense fallback={<>Loading .........</>}>
+             <Dummy />
+            </Suspense>
+            :null}
 
           <div className={`app-body ${mode}`} >
             {/* {<button className={`${theme}`} onClick={()=>setmode( mode==='dark'?'light':'dark')}>Mode</button> } */}
@@ -66,7 +73,7 @@ function App() {
             <Inputvideo  ref={inputRef} editableVideo={editableVideo} />
             <Videomap editVideo={editVideo} />
           </div>
-
+           
           </VideoDispatchContext.Provider>
         </VideosContext.Provider>
       </ThemeContext.Provider>
