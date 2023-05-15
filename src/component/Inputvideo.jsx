@@ -1,11 +1,12 @@
 import './Inputvideo.css'
 import PropTypes from "prop-types";
-import { useContext, useState ,useRef, useEffect} from 'react';
+import { useContext, useState ,useLayoutEffect ,useRef, useEffect, forwardRef} from 'react';
 import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
+import { useImperativeHandle } from 'react';
 
 
-function Inputvideo({ editableVideo }) {
+const Inputvideo = forwardRef(function Inputvideo({ editableVideo } ,ref) {
 
   const imgArr = ["c++", "databases", "webdevelopment", "computer", "mobile", "programming", "developer"];
   const index = Math.floor(Math.random() * imgArr.length);
@@ -19,7 +20,7 @@ function Inputvideo({ editableVideo }) {
     channelname: "Code help",
     id: "",
   };
-  const inputRef =useRef(null)
+  // const inputRef =useRef(null)
 
   const dispatch = useVideoDispatch();
 
@@ -37,13 +38,25 @@ function Inputvideo({ editableVideo }) {
     setnewvideo(initialstate);
   }
   useEffect(()=>{
-    inputRef.current.focus();
+     if (editableVideo.id) {
+      setnewvideo(editableVideo)
+   }
+    // inputRef.current.focus();
+  },[editableVideo])
+  const iRef =useRef(null);
+
+  useImperativeHandle(ref ,()=>{
+    return {
+      inputFocus(){
+        iRef.current.focus();
+      }
+    }
   })
-
-  if (editableVideo.id !== newvideo.id) {
-    setnewvideo(editableVideo)
-  }
-
+useLayoutEffect(()=>{
+  const {rect} = iRef.current.getBoundingClientRect();
+  console.log(rect);
+ 
+},[])
   function handlechange(e) {
     setnewvideo({ ...newvideo, [e.target.name]: e.target.value });
   }
@@ -52,7 +65,7 @@ function Inputvideo({ editableVideo }) {
   return (
     <>
       <form >
-        <input type="text" ref={inputRef} value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
+        <input type="text" ref={iRef} value={newvideo.title} name="title" onChange={handlechange} placeholder="Enter title" />
         <input type="text" value={newvideo.views} name="views" onChange={handlechange} placeholder="Enter views" />
 
         <div className="click">
@@ -62,14 +75,15 @@ function Inputvideo({ editableVideo }) {
 
     </>
   )
-}
+})
 
 Inputvideo.propTypes = {
   editableVideo: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.object
+    PropTypes.object,
   ]),
+  ref:PropTypes.ref,
 
 }
 
-export default Inputvideo
+export default Inputvideo;

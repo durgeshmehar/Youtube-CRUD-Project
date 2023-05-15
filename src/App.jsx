@@ -3,15 +3,17 @@ import "./App.css";
 import Inputvideo from "./component/Inputvideo"
 import Videomap from "./component/Videomap"
 import React from 'react'
-import { useState, useReducer, useContext ,useCallback} from 'react';
+import { useState,useRef, useReducer, useContext ,useCallback} from 'react';
 import ReactDOM from 'react-dom/client'
 import Switch from 'react-switch';
 import ThemeContext from "./context/ThemeContext";
 import VideoDispatchContext from "./context/VideoDispatchContext" ;
 import VideosContext from "./context/videosContext";
 import Counter from"./component/Counter"
+import { useEffect } from "react";
 
 function App() {
+  const inputRef =useRef(null);
   const [mode, setmode] = useState('dark');
   const [editableVideo, seteditableVideo] = useState({ title: "", views: "", id: "" });
   function infoReducer(info, action) {
@@ -40,6 +42,11 @@ function App() {
   },[info])
 
   const theme = useContext(ThemeContext)
+  useEffect(()=>{
+     inputRef.current.inputFocus();
+
+    //  inputRef.current.focus();
+  },[editableVideo ,info])
 
   return (
     <React.StrictMode>
@@ -56,7 +63,7 @@ function App() {
               <Switch className={`${theme}`} checked={mode === "dark"} onChange={() => setmode(mode === 'dark' ? 'light' : 'dark')} />
             </div>
 
-            <Inputvideo  editableVideo={editableVideo} />
+            <Inputvideo  ref={inputRef} editableVideo={editableVideo} />
             <Videomap editVideo={editVideo} />
           </div>
 
