@@ -4,6 +4,7 @@ import { useContext, useState ,useLayoutEffect ,useRef, useEffect, forwardRef} f
 import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
 import { useImperativeHandle } from 'react';
+import { createPortal } from 'react-dom';
 
 
 const Inputvideo = forwardRef(function Inputvideo({ editableVideo } ,ref) {
@@ -72,6 +73,10 @@ useLayoutEffect(()=>{
           <button className={`${theme}`} onClick={handlesubmit}> {editableVideo.id !== "" ? 'Edit Video' : 'Add Video'} </button>
         </div>
       </form>
+
+      {createPortal(
+        <h1>This is style & HTML by react inputvideo file to test createPortal react dom functionality</h1>,document.getElementById('root1')
+      )}
 
     </>
   )

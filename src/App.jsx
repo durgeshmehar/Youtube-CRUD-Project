@@ -58,7 +58,8 @@ function App() {
 
         <Counter />
         <button onClick={()=>{setshow(!show)}}>Show</button>
-           {show?<Suspense fallback={<>Loading .........</>}>
+           {show?
+           <Suspense fallback={<>Loading .........</>}>
              <Dummy />
             </Suspense>
             :null}
