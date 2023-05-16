@@ -8,12 +8,13 @@ import useVideoDispatch from "../hook/VideoDispatchHook";
 function Videomap({editVideo}) {
    const info =useVideos();
    const dispatch =useVideoDispatch();
-   const URL ="https://my.api.mockaroo.com/viideo.json?key=a9fc1ba0";
+   const URL ="https://api.mockaroo.com/api/b7e270f0?count=10&key=c89e8360";
 
    
    useState(()=>{
     async function autoLoadVideo(){
       const res = await axios.get(URL);
+      
       dispatch({ type:"LOAD" ,payload:res.data });
      }
     autoLoadVideo();

@@ -5,7 +5,7 @@ import ThemeContext from '../context/ThemeContext';
 import useVideoDispatch from '../hook/VideoDispatchHook'
 import { useImperativeHandle } from 'react';
 import { createPortal } from 'react-dom';
-
+import { flushSync } from 'react-dom';
 
 const Inputvideo = forwardRef(function Inputvideo({ editableVideo } ,ref) {
 
@@ -21,7 +21,23 @@ const Inputvideo = forwardRef(function Inputvideo({ editableVideo } ,ref) {
     channelname: "Code help",
     id: "",
   };
-  // const inputRef =useRef(null)
+
+// To use Flushsync  -->
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    // Update state using flushSync()
+    flushSync(() => {
+      setCount(count=>count + 1);
+      setCount(count=>count + 1);
+      setCount(count=>count + 1);
+    });
+   window.print();
+    console.log('Count:', count); // Output: Count: 0
+  }
+// To use Flushsync  <---
+
+    // const inputRef =useRef(null)
 
   const dispatch = useVideoDispatch();
 
@@ -73,6 +89,11 @@ useLayoutEffect(()=>{
           <button className={`${theme}`} onClick={handlesubmit}> {editableVideo.id !== "" ? 'Edit Video' : 'Add Video'} </button>
         </div>
       </form>
+      
+      <div>
+      <button onClick={handleClick}>Increment</button>
+      <p>Count:{' '}{count}</p>
+    </div>
 
       {createPortal(
         <h1>This is style & HTML by react inputvideo file to test createPortal react dom functionality</h1>,document.getElementById('root1')

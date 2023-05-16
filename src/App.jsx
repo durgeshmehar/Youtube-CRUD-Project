@@ -17,6 +17,7 @@ function App() {
   const inputRef =useRef(null);
   const [mode, setmode] = useState('dark');
   const [editableVideo, seteditableVideo] = useState({ title: "", views: "", id: "" });
+
   const [show ,setshow] =useState(false);
   function infoReducer(info, action) {
     const newV = [...info];
@@ -46,7 +47,6 @@ function App() {
   const theme = useContext(ThemeContext)
   useEffect(()=>{
      inputRef.current.inputFocus();
-
     //  inputRef.current.focus();
   },[editableVideo ,info])
 
